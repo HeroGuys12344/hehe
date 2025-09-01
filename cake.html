@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Birthday Cake 🎂</title>
+  <style>
+    body {
+      background: #fce4ec;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: 'Comic Sans MS', cursive;
+      overflow: hidden; /* so balloons don’t scroll */
+    }
+
+    /* Cake layers */
+    .cake {
+      position: relative;
+      width: 250px;
+      height: 200px;
+    }
+    .layer {
+      position: absolute;
+      bottom: 0;
+      background: pink;
+      border-radius: 15px;
+    }
+    .layer.bottom {
+      width: 250px;
+      height: 100px;
+      left: 0;
+    }
+    .layer.top {
+      width: 180px;
+      height: 80px;
+      left: 35px;
+      bottom: 100px;
+      background: #ffc1e3;
+    }
+
+    /* Candles */
+    .candle {
+      position: absolute;
+      width: 12px;
+      height: 40px;
+      background: yellow;
+      top: -40px;
+    }
+    .flame {
+      width: 15px;
+      height: 20px;
+      background: orange;
+      border-radius: 50% 50% 40% 40%;
+      margin: -20px auto;
+      animation: flicker 0.2s infinite alternate;
+    }
+    @keyframes flicker {
+      from { transform: scale(1); opacity: 1; }
+      to { transform: scale(1.2); opacity: 0.8; }
+    }
+
+    /* Buttons */
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border: none;
+      background: #ff5e78;
+      color: white;
+      font-size: 1.2em;
+      border-radius: 20px;
+      cursor: pointer;
+      z-index: 10; /* above balloons */
+    }
+
+    /* Balloons */
+    .balloon {
+      position: absolute;
+      bottom: -150px;
+      width: 60px;
+      height: 80px;
+      background: red;
+      border-radius: 50% 50% 45% 55%;
+      animation: floatUp 6s linear infinite;
+      z-index: 1;
+    }
+    .balloon:after {
+      content: "";
+      position: absolute;
+      bottom: -20px;
+      left: 50%;
+      width: 2px;
+      height: 20px;
+      background: white;
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(-110vh) rotate(20deg); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+  <h1>🎂 Here’s your cake!</h1>
+<p> 
+  <div class="cake">
+    <div class="layer bottom"></div>
+    <div class="layer top"></div>
+
+    <!-- 5 Candles -->
+    <div class="candle" style="left:50px"><div class="flame" id="flame1"></div></div>
+    <div class="candle" style="left:90px"><div class="flame" id="flame2"></div></div>
+    <div class="candle" style="left:130px"><div class="flame" id="flame3"></div></div>
+    <div class="candle" style="left:170px"><div class="flame" id="flame4"></div></div>
+    <div class="candle" style="left:210px"><div class="flame" id="flame5"></div></div>
+  </div>
+
+  <button onclick="blowCandles()">Blow Candles 🕯️</button>
+  <button onclick="cutCake()" style="display:none;" id="cutBtn">Cut Cake 🍰</button>
+  <button onclick="location.href='another.html'" style="display:none;" id="nextBtn">Open Your Card 💌</button>
+</p>
+  <script>
+    // Blowing candles
+    function blowCandles() {
+      for (let i = 1; i <= 5; i++) {
+        document.getElementById('flame' + i).style.display = 'none';
+      }
+      document.getElementById('cutBtn').style.display = 'inline-block';
+    }
+
+    function cutCake() {
+      alert("🍰 Yummy! The cake is cut 🎉");
+      document.getElementById('nextBtn').style.display = 'inline-block';
+    }
+
+    // Balloons
+    for (let i = 0; i < 20; i++) {
+      let balloon = document.createElement("div");
+      balloon.className = "balloon";
+      balloon.style.left = Math.random() * window.innerWidth + "px";
+      balloon.style.background = `hsl(${Math.random()*360},70%,60%)`;
+      balloon.style.animationDuration = (5 + Math.random()*5) + "s";
+      document.body.appendChild(balloon);
+    }
+  </script>
+</body>
+</html>
